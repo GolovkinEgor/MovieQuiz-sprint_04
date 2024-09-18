@@ -3,17 +3,12 @@ import UIKit
 final class MovieQuizViewController: UIViewController {
     override func viewDidLoad(){
         
-        
-        
         super.viewDidLoad()
         showNextQuestionOrResults()
-        imageView.layer.masksToBounds=true
+        imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 20
         imageView.layer.borderWidth=8
         imageView.layer.borderColor=UIColor.clear.cgColor
-        
-        
-        
         
     }
     struct QuizQuestion {
@@ -35,7 +30,6 @@ final class MovieQuizViewController: UIViewController {
         // строка с порядковым номером этого вопроса (ex. "1/10")
         let questionNumber: String
         
-        
     }
     // для состояния "Результат квиза"
     struct QuizResultsViewModel {
@@ -51,23 +45,6 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
     // приватный метод, который меняет цвет рамки
-    // принимает на вход булевое значение и ничего не возвращает
-    
-    @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        let currentQuestion = questions[currentQuestionIndex] // 1
-        let givenAnswer = true // 2
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
-    }
-    
-    // метод вызывается, когда пользователь нажимает на кнопку "Нет"
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-        let currentQuestion = questions[currentQuestionIndex] // 1
-        let givenAnswer = false // 2
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
-    }
-    
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
@@ -114,6 +91,20 @@ final class MovieQuizViewController: UIViewController {
     
     private var correctAnswers = 0
     private var currentQuestionIndex = -1
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        let currentQuestion = questions[currentQuestionIndex] // 1
+        let givenAnswer = true // 2
+        
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
+    }
+    
+    // метод вызывается, когда пользователь нажимает на кнопку "Нет"
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+        let currentQuestion = questions[currentQuestionIndex] // 1
+        let givenAnswer = false // 2
+        
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
+    }
     private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
             title: result.title,
