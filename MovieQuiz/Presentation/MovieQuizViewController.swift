@@ -9,11 +9,16 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenter?
+    private var statisticService:StatisticServiceProtocol?
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     
     override func viewDidLoad(){
-        
+        print(NSHomeDirectory())
+        UserDefaults.standard.set(true, forKey: "viewDidLoad")
+
+        // Для приложения MovieQuiz напечатает похожий адрес:
+        // /Users/User/Library/Developer/CoreSimulator/Devices/44BE7076-1CBF-4F37-BDDD-49EBC4114DF3/data/Containers/Bundle/Application/D1FA5EBA-0BDD-4AFA-9554-651A7E7DC9B9/MovieQuiz.app
         
         super.viewDidLoad()
         let questionFactory = QuestionFactory()
@@ -110,7 +115,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            var text = correctAnswers == questionsAmount ?
+            let text = correctAnswers == questionsAmount ?
             "Поздравляем, вы ответили на 10 из 10!" :
             "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             let  viewModel = QuizResultsViewModel( // 2
