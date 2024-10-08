@@ -22,6 +22,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         
         super.viewDidLoad()
         statisticService = StatisticService()
+        
         let questionFactory = QuestionFactory()
         questionFactory.setup(delegate: self)
         self.questionFactory = questionFactory
@@ -120,7 +121,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
             var text =  "Ваш результат \(correctAnswers)/\(questionsAmount)\n"
             if let statisticService = statisticService{
                 statisticService.store(correct: correctAnswers, total: questionsAmount)
-                text = "Ваш результат \(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов: \(statisticService.gamesCount)\nРекорд: \(statisticService.bestGame)\nСредняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%" 
+                text = "Ваш результат \(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов: \(statisticService.gamesCount)\nРекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString)\nСредняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%" 
             }
             
         

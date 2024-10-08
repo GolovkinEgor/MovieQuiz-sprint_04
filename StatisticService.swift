@@ -32,8 +32,8 @@ final class StatisticService: StatisticServiceProtocol {
         get{
             let correct = storage.integer(forKey: Keys.bestGame.rawValue)
             let total = storage.integer(forKey: Keys.bestGame.rawValue)
-            let data = storage.object(forKey: Keys.bestGame.rawValue)
-            let best = GameResult(correct: correct, total: total, date: Date())
+            let data = storage.object(forKey: Keys.bestGame.rawValue)as? Date ?? Date()
+            let best = GameResult(correct:  correct, total: total, date:  data)
             return best
             
         }
@@ -55,7 +55,7 @@ final class StatisticService: StatisticServiceProtocol {
     
     var totalAccuracy: Double{
         if correctAnswers > 0  && gamesCount>0{
-            return Double((correctAnswers)/(gamesCount))*100
+            return Double((correctAnswers)/(gamesCount))*10
         }
         else{
             return 0
