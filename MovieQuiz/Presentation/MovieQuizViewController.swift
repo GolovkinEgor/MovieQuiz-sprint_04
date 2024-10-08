@@ -21,6 +21,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         // /Users/User/Library/Developer/CoreSimulator/Devices/44BE7076-1CBF-4F37-BDDD-49EBC4114DF3/data/Containers/Bundle/Application/D1FA5EBA-0BDD-4AFA-9554-651A7E7DC9B9/MovieQuiz.app
         
         super.viewDidLoad()
+        statisticService = StatisticService()
         let questionFactory = QuestionFactory()
         questionFactory.setup(delegate: self)
         self.questionFactory = questionFactory
@@ -114,10 +115,15 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     }
     
     private func showNextQuestionOrResults() {
+        
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = correctAnswers == questionsAmount ?
-            "Поздравляем, вы ответили на 10 из 10!" :
-            "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            var text =  "Ваш результат \(correctAnswers)/\(questionsAmount)\n"
+            if let statisticService = statisticService{
+                statisticService.store(correct: correctAnswers, total: questionsAmount)
+                text = "Ваш результат \(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов: \(statisticService.gamesCount)\nРекорд: \(statisticService.bestGame)\nСредняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%" 
+            }
+            
+        
             let  viewModel = QuizResultsViewModel( // 2
                 title: "Этот раунд окончен!",
                 text: text,

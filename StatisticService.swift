@@ -7,14 +7,14 @@
 
 import Foundation
 // Расширяем при объявлении
-final class StatisticService {
+final class StatisticService: StatisticServiceProtocol {
     private let storage: UserDefaults = .standard
     private enum Keys: String {
         case correctAnswer
         case bestGame
         case gamesCount
     }
-    enum bestGame{
+    enum BestGame{
         case correct
         case total
         case date
@@ -32,7 +32,7 @@ final class StatisticService {
         get{
             let correct = storage.integer(forKey: Keys.bestGame.rawValue)
             let total = storage.integer(forKey: Keys.bestGame.rawValue)
-            let date = storage.object(forKey: Keys.bestGame.rawValue)as? Date ?? Date()
+            let data = storage.object(forKey: Keys.bestGame.rawValue)
             let best = GameResult(correct: correct, total: total, date: Date())
             return best
             
@@ -44,7 +44,7 @@ final class StatisticService {
             
         }
     }
-    private var correctAnswer: Int{
+    private var correctAnswers: Int{
         get{
             storage.integer(forKey: Keys.correctAnswer.rawValue)
         }
@@ -54,8 +54,8 @@ final class StatisticService {
     }
     
     var totalAccuracy: Double{
-        if correctAnswer > 0  && gamesCount>0{
-            return Double((correctAnswer)/(gamesCount))*100
+        if correctAnswers > 0  && gamesCount>0{
+            return Double((correctAnswers)/(gamesCount))*100
         }
         else{
             return 0
@@ -66,7 +66,7 @@ final class StatisticService {
     
     
     func store(correct count: Int, total amount: Int) {
-        correctAnswer += count
+        correctAnswers += count
         gamesCount += 1
         let newGame = GameResult(correct: count, total: amount, date: Date())
         if newGame.isBetterThan(bestGame){
