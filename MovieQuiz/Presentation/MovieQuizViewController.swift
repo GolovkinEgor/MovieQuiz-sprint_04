@@ -67,11 +67,6 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
-        struct ViewModel{
-            let image: UIImage
-            let question: String
-            let questionNumber: String
-        }
      
         
     }

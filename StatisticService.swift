@@ -55,7 +55,7 @@ final class StatisticService: StatisticServiceProtocol {
     
     var totalAccuracy: Double{
         if correctAnswers > 0  && gamesCount>0{
-            return (Double(correctAnswers)/(Double(gamesCount)))*10
+            return (Double(correctAnswers))/(Double(gamesCount))*10
                     }
         else{
             return 0
