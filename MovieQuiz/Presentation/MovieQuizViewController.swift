@@ -44,9 +44,10 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         let givenAnswer = true // 2
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
+        
     }
     
-    // метод вызывается, когда пользователь нажимает на кнопку "Нет"
+    
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         guard let currentQuestion = currentQuestion else {
             return
@@ -71,6 +72,8 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
             let question: String
             let questionNumber: String
         }
+     
+        
     }
     private  func convert(model: QuizQuestion) -> QuizStepViewModel {
         
