@@ -17,9 +17,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         print(NSHomeDirectory())
         UserDefaults.standard.set(true, forKey: "viewDidLoad")
 
-        // Для приложения MovieQuiz напечатает похожий адрес:
-        // /Users/User/Library/Developer/CoreSimulator/Devices/44BE7076-1CBF-4F37-BDDD-49EBC4114DF3/data/Containers/Bundle/Application/D1FA5EBA-0BDD-4AFA-9554-651A7E7DC9B9/MovieQuiz.app
-        
+    
         super.viewDidLoad()
         statisticService = StatisticService()
         
@@ -30,20 +28,14 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         questionFactory.requestNextQuestion()
     }
     
-    
-    
-    
-    // приватный метод, который меняет цвет рамки
-   
-    
-    
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
         guard let currentQuestion = currentQuestion else {
             return
         }
         let givenAnswer = true // 2
         
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) 
+        // 3
         
     }
     
@@ -54,7 +46,8 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         }
         let givenAnswer = false // 2
         
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) 
+        
     }
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
@@ -70,6 +63,13 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
      
         
     }
+    private func disableButton(button: UIButton) {
+            button.isEnabled = false
+        }
+
+        private func enableButton(button: UIButton) {
+            button.isEnabled = true
+        }
     private  func convert(model: QuizQuestion) -> QuizStepViewModel {
         
         let questionStep = QuizStepViewModel(
@@ -102,13 +102,14 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         if isCorrect { // 1
             correctAnswers += 1 // 2
         }
-        imageView.layer.masksToBounds = true // 1
-        imageView.layer.borderWidth = 8 // 2
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor // 3
-        // запускаем задачу через 1 секунду c помощью диспетчера задач
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 8
+        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self]  in
             guard let self = self else {return}
-            // код, который мы хотим вызвать через 1 секунду
+            
+            self.imageView.layer.borderWidth = 0
             self.showNextQuestionOrResults()
         }
     }
