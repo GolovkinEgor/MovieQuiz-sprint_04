@@ -130,19 +130,25 @@
                                 <color key="textColor" name="Color"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ZGF-nc-Log">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black (iOS)"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TVs-Fh-dW7" secondAttribute="trailing" constant="20" id="4px-Uu-C1K"/>
+                            <constraint firstItem="ZGF-nc-Log" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="CIO-JX-WUk"/>
                             <constraint firstItem="R9h-4A-iTt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="I0M-gH-Y3e"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="R9h-4A-iTt" secondAttribute="bottom" id="aTK-wZ-INF"/>
                             <constraint firstItem="TVs-Fh-dW7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="afR-jJ-NaN"/>
+                            <constraint firstItem="ZGF-nc-Log" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hwe-l1-AF6"/>
                             <constraint firstItem="R9h-4A-iTt" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="mtR-nL-QVc"/>
                             <constraint firstItem="TVs-Fh-dW7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="wO6-WP-qdR"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="ZGF-nc-Log" id="pR1-y7-hbj"/>
                         <outlet property="counterLabel" destination="4PT-xj-Rrv" id="J0Q-Ih-zrO"/>
                         <outlet property="imageView" destination="0CD-hd-bY9" id="Gfs-qq-8sG"/>
                         <outlet property="textLabel" destination="OZn-gn-5eH" id="PAm-Hp-eHA"/>
