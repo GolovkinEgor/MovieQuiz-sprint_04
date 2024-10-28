@@ -17,16 +17,16 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     override func viewDidLoad(){
         print(NSHomeDirectory())
         UserDefaults.standard.set(true, forKey: "viewDidLoad")
-
-    
+        
+        
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
-            questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
-            statisticService = StatisticService()
-
-            showLoadingIndicator()
-            questionFactory?.loadData()
-    
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        statisticService = StatisticService()
+        
+        showLoadingIndicator()
+        questionFactory?.loadData()
+        
     }
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
@@ -35,7 +35,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         }
         let givenAnswer = true
         
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) 
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         
         
     }
@@ -45,9 +45,9 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         guard let currentQuestion = currentQuestion else {
             return
         }
-        let givenAnswer = false 
+        let givenAnswer = false
         
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) 
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         
     }
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -61,33 +61,33 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
-     
+        
         
     }
     func didLoadDataFromServer() {
-        activityIndicator.isHidden = true 
-            questionFactory?.requestNextQuestion()
-
+        activityIndicator.isHidden = true
+        questionFactory?.requestNextQuestion()
+        
     }
-
+    
     func didFailToLoadData(with error: Error) {
         showNetworkError(message: error.localizedDescription)
     }
     private func disableButton(button: UIButton) {
-            button.isEnabled = false
-        }
-
-        private func enableButton(button: UIButton) {
-            button.isEnabled = true
-        }
+        button.isEnabled = false
+    }
+    
+    private func enableButton(button: UIButton) {
+        button.isEnabled = true
+    }
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         
-            return QuizStepViewModel(
-                image: UIImage(data: model.image) ?? UIImage(),
-                question: model.text,
-                questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-        }
-  
+        return QuizStepViewModel(
+            image: UIImage(data: model.image) ?? UIImage(),
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
+    }
+    
     private func show(quiz result: QuizResultsViewModel) {
         let alert = AlertModel(
             title: result.title,
@@ -130,10 +130,10 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
             var text =  "Ваш результат \(correctAnswers)/\(questionsAmount)\n"
             if let statisticService = statisticService{
                 statisticService.store(correct: correctAnswers, total: questionsAmount)
-                text = "Ваш результат \(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов: \(statisticService.gamesCount)\nРекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString)\nСредняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%" 
+                text = "Ваш результат \(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов: \(statisticService.gamesCount)\nРекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString)\nСредняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%"
             }
             
-        
+            
             let  viewModel = QuizResultsViewModel( // 2
                 title: "Этот раунд окончен!",
                 text: text,
@@ -144,7 +144,8 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
             imageView.layer.borderColor = UIColor.clear.cgColor
             questionFactory?.requestNextQuestion()
         }
-        }
+    }
+
     private func delegating() {
         let questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory.setup(delegate: self)
@@ -153,6 +154,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         let alertPresenter = AlertPresenter()
         alertPresenter.setup(delegate: self)
         self.alertPresenter = alertPresenter
+        statisticService = StatisticService()
     }
     private func showLoadingIndicator() {
         activityIndicator.isHidden = false

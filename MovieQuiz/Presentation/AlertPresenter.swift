@@ -8,8 +8,6 @@
 
 import UIKit
 class AlertPresenter: AlertPresenterProtocol{
-    
-    
     private weak var delegate : UIViewController?
     
     func showAlert(model: AlertModel){
