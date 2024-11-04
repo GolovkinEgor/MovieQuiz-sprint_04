@@ -13,6 +13,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     private var statisticService:StatisticServiceProtocol?
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
+    private var movieLoader: MoviesLoading = MoviesLoader()
     
     override func viewDidLoad(){
         print(NSHomeDirectory())
