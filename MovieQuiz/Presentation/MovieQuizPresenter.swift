@@ -15,13 +15,13 @@ final class MovieQuizPresenter {
     private var statisticService:StatisticServiceProtocol?
      var questionFactory: QuestionFactoryProtocol?
        
-       func yesButtonClicked() {
+    func yesButtonClicked() {
            didAnswer(isYes: true)
        }
     func noButtonClicked() {
             didAnswer(isYes: false)
         }
-    private func didAnswer(isYes : Bool){
+     func didAnswer(isYes : Bool){
         guard let currentQuestion = currentQuestion else{
             return
         }
@@ -29,6 +29,25 @@ final class MovieQuizPresenter {
         viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         
     }
+    private func didAnswer(isCorrect:Bool){
+        if isCorrect{
+            correctAnswers+=1
+        }
+    }
+    func showAnswerResult(isCorrect:Bool){
+        didAnswer(isYes: isCorrect)
+        viewController?.highLightImageBorder(isCorrect: isCorrect)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+            
+            self.questionFactory = self.questionFactory
+            self.showNextQuestionOrResults()
+        }
+    }
+        
+    
         
         func isLastQuestion() -> Bool {
             currentQuestionIndex == questionsAmount - 1

@@ -18,7 +18,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     private var statisticService:StatisticServiceProtocol?
     
     
-    private var correctAnswers = 0
+   
     private var movieLoader: MoviesLoading = MoviesLoader()
     
     override func viewDidLoad(){
@@ -50,7 +50,16 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         presenter.noButtonClicked()
         
     }
-    
+    func highLightImageBorder(isCorrect: Bool) {
+          
+           imageView.layer.masksToBounds = true
+           
+           imageView.layer.borderWidth = 8
+           
+           imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+           
+           imageView.layer.cornerRadius = 20
+       }
     
     func didLoadDataFromServer() {
         activityIndicator.isHidden = true
@@ -71,7 +80,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
     
     
     func show(quiz result: QuizResultsViewModel) {
-        statisticService?.store(correct: correctAnswers, total: presenter.questionsAmount)
+        statisticService?.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
         let alertModel = AlertModel(
             title: result.title,
             message: result.text,
@@ -89,15 +98,38 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
         counterLabel.text = step.questionNumber
     }
     func showAnswerResult(isCorrect: Bool) {
+        presenter.didAnswer(isYes: isCorrect)
+        highLightImageBorder(isCorrect: isCorrect)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.presenter.correctAnswers = self.correctAnswers
+            
             self.presenter.questionFactory = self.questionFactory
             self.presenter.showNextQuestionOrResults()
         }
     }
         func showNextQuestionOrResults() {
+            if presenter.isLastQuestion() {
+                var text =  "Ваш результат \(presenter.correctAnswers)/\(presenter.questionsAmount)\n"
+                if let statisticService = statisticService{
+                    statisticService.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
+                    text = "Ваш результат \(presenter.correctAnswers)/\(presenter.questionsAmount)\nКоличество сыгранных квизов: \(statisticService.gamesCount)\nРекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString)\nСредняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%"
+                }
+                
+                
+                let  viewModel = QuizResultsViewModel( // 2
+                    title: "Этот раунд окончен!",
+                    text: text,
+                    buttonText: "Сыграть ещё раз")
+                presenter.viewController?.show(quiz: viewModel) // 3
+            }
+            else {
+                self.presenter.switchToNextQuestion()
+                
+                questionFactory?.requestNextQuestion()
+            }
         }
+        
         
         private func delegating() {
             let questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
@@ -125,7 +157,7 @@ final class MovieQuizViewController: UIViewController,QuestionFactoryDelegate{
                 guard let self = self else { return }
                 
                 self.presenter.resetQuestionIndex()
-                self.correctAnswers = 0
+                self.presenter.correctAnswers = 0
                 
                 self.questionFactory?.requestNextQuestion()
             }
