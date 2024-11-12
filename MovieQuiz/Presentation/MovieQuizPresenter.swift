@@ -6,46 +6,40 @@
 //
 import UIKit
 import Foundation
-final class MovieQuizPresenter {
-    let questionsAmount: Int = 10
-     var correctAnswers = 0
-    private var currentQuestionIndex: Int = 0
-    var currentQuestion: QuizQuestion?
-       weak var viewController: MovieQuizViewController?
-    private var statisticService:StatisticServiceProtocol?
-     var questionFactory: QuestionFactoryProtocol?
-       
+final class MovieQuizPresenter:QuestionFactoryDelegate {
+    func didLoadDataFromServer() {
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+    
+    func didFailToLoadData(with error: any Error) {
+        let message = error.localizedDescription
+        viewController?.showNetworkError(message: message)
+    }
+    
+     let questionsAmount: Int = 10
+         var correctAnswers: Int = 0
+         var currentQuestion: QuizQuestion?
+        private var questionFactory: QuestionFactoryProtocol?
+        private var statisticService: StatisticServiceProtocol?
+         weak var viewController: MovieQuizViewController?
+        private var currentQuestionIndex: Int = 0
+        
+    init(viewController: MovieQuizViewController) {
+            self.viewController = viewController
+            
+            questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+            questionFactory?.loadData()
+            viewController.showLoadingIndicator()
+        }
     func yesButtonClicked() {
            didAnswer(isYes: true)
        }
     func noButtonClicked() {
             didAnswer(isYes: false)
         }
-     func didAnswer(isYes : Bool){
-        guard let currentQuestion = currentQuestion else{
-            return
-        }
-        let givenAnswer = isYes
-        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
-    }
-    private func didAnswer(isCorrect:Bool){
-        if isCorrect{
-            correctAnswers+=1
-        }
-    }
-    func showAnswerResult(isCorrect:Bool){
-        didAnswer(isYes: isCorrect)
-        viewController?.highLightImageBorder(isCorrect: isCorrect)
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            
-            self.questionFactory = self.questionFactory
-            self.showNextQuestionOrResults()
-        }
-    }
+    
+  
         
     
         
@@ -60,6 +54,11 @@ final class MovieQuizPresenter {
         func switchToNextQuestion() {
             currentQuestionIndex += 1
         }
+    func restartGame(){
+        currentQuestionIndex = 0
+        correctAnswers = 0
+        questionFactory?.requestNextQuestion()
+    }
     
 
     
@@ -102,4 +101,22 @@ final class MovieQuizPresenter {
             questionFactory?.requestNextQuestion()
         }
     }
-}
+    
+        func didAnswer(isCorrect: Bool) {
+           if isCorrect {
+               correctAnswers += 1
+           }
+       }
+       
+       
+        func didAnswer(isYes: Bool) {
+           guard let currentQuestion = currentQuestion else {
+               return
+           }
+           
+           let givenAnswer = isYes
+           
+           viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+       }
+   }
+
