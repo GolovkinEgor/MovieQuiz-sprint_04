@@ -8,12 +8,12 @@ import UIKit
 import Foundation
 final class MovieQuizPresenter {
     let questionsAmount: Int = 10
-    private var correctAnswers = 0
+     var correctAnswers = 0
     private var currentQuestionIndex: Int = 0
     var currentQuestion: QuizQuestion?
        weak var viewController: MovieQuizViewController?
     private var statisticService:StatisticServiceProtocol?
-    private var questionFactory: QuestionFactoryProtocol?
+     var questionFactory: QuestionFactoryProtocol?
        
        func yesButtonClicked() {
            didAnswer(isYes: true)
