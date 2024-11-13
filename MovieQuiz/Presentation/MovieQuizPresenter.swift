@@ -81,10 +81,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     //MARK: - Privates Methods
     
     private func makeResultsMessage() -> String {
-        var text = "Ваш результат: \(correctAnswers)/\(self.questionsAmount)\n"
+        var text = "Ваш результат: \(correctAnswers)/\(questionsAmount)\n"
         if let statisticService = statisticService {
             // сохраняем результаты
-            statisticService.store(correct: correctAnswers, total: self.questionsAmount)
+            statisticService.store(correct: correctAnswers, total: questionsAmount)
             text += """
                     Количество сыгранных квизов: \(statisticService.gamesCount)
                     Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString))
