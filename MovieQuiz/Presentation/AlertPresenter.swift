@@ -10,12 +10,14 @@ import UIKit
 class AlertPresenter: AlertPresenterProtocol{
     private weak var delegate : UIViewController?
     
-    func showAlert(model: AlertModel){
+    func showAlert(model: AlertModel, id: String?){
+        
         let alert = UIAlertController(
             title:  model.title,
             message: model.message,
             preferredStyle:  .alert
         )
+        alert.view.accessibilityIdentifier = "Game result"
         let action = UIAlertAction(title:  model.buttonText, style: .default) {  _  in
             model.completion()
         }

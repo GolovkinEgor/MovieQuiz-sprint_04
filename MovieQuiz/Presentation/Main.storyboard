@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="TVs-Fh-dW7">
-                                <rect key="frame" x="20" y="58" width="374" height="604.5"/>
+                                <rect key="frame" x="20" y="58" width="374" height="678.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="220" translatesAutoresizingMaskIntoConstraints="NO" id="LUw-Ek-cFx">
                                         <rect key="frame" x="0.0" y="0.0" width="332.5" height="23.5"/>
@@ -46,6 +46,7 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="0/10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4PT-xj-Rrv" userLabel="Index Label">
                                                 <rect key="frame" x="292" y="0.0" width="40.5" height="23.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Index"/>
                                                 <fontDescription key="fontDescription" name="YSDisplay Medium" family="YS Display" pointSize="20"/>
                                                 <color key="textColor" name="Color"/>
                                                 <nil key="highlightedColor"/>
@@ -58,6 +59,7 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0CD-hd-bY9" userLabel="Preview Image">
                                         <rect key="frame" x="0.0" y="43.5" width="374" height="561"/>
                                         <color key="backgroundColor" name="Color"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Poster"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="0CD-hd-bY9" secondAttribute="height" multiplier="2:3" id="32B-FJ-WB9"/>
                                         </constraints>
@@ -67,6 +69,12 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма меньше, чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZn-gn-5eH" userLabel="Question Label">
+                                        <rect key="frame" x="0.0" y="624.5" width="341" height="54"/>
+                                        <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
+                                        <color key="textColor" name="Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="0CD-hd-bY9" firstAttribute="leading" secondItem="TVs-Fh-dW7" secondAttribute="leading" id="KUg-qS-gTl"/>
@@ -79,6 +87,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eE1-BB-vUR" userLabel="noButton">
                                         <rect key="frame" x="0.0" y="0.0" width="177" height="60"/>
                                         <color key="backgroundColor" name="Color"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="No"/>
                                         <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                         <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -97,6 +106,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DMf-pF-2n7" userLabel="yesButton">
                                         <rect key="frame" x="197" y="0.0" width="177" height="60"/>
                                         <color key="backgroundColor" name="Color"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Yes"/>
                                         <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal">
@@ -123,26 +133,25 @@
                                     <constraint firstAttribute="height" constant="60" id="HWi-7g-Rr6"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Рейтинг этого фильма меньше, чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZn-gn-5eH" userLabel="Question Label">
-                                <rect key="frame" x="37" y="670" width="335" height="78"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
-                                <color key="textColor" name="Color"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ZGF-nc-Log">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black (iOS)"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TVs-Fh-dW7" secondAttribute="trailing" constant="20" id="4px-Uu-C1K"/>
+                            <constraint firstItem="ZGF-nc-Log" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="CIO-JX-WUk"/>
                             <constraint firstItem="R9h-4A-iTt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="I0M-gH-Y3e"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="R9h-4A-iTt" secondAttribute="bottom" id="aTK-wZ-INF"/>
                             <constraint firstItem="TVs-Fh-dW7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="afR-jJ-NaN"/>
+                            <constraint firstItem="ZGF-nc-Log" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hwe-l1-AF6"/>
                             <constraint firstItem="R9h-4A-iTt" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="mtR-nL-QVc"/>
                             <constraint firstItem="TVs-Fh-dW7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="wO6-WP-qdR"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="ZGF-nc-Log" id="pR1-y7-hbj"/>
                         <outlet property="counterLabel" destination="4PT-xj-Rrv" id="J0Q-Ih-zrO"/>
                         <outlet property="imageView" destination="0CD-hd-bY9" id="Gfs-qq-8sG"/>
                         <outlet property="textLabel" destination="OZn-gn-5eH" id="PAm-Hp-eHA"/>
